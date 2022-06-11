@@ -1,0 +1,8 @@
+{%block projects%}
+{%for project in projects%}
+{{project.creator}}
+{{project.landing_pic}}
+{{project.description}}
+<a href="{% url 'project' project.id %}">Full view</a>
+{%endfor%}
+{%endblock%}

@@ -9,6 +9,7 @@ from tinymce.models import HTMLField
 # Create your models here.
 class Profile(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+	display_name = models.CharField(max_length=60)
 	bio = models.CharField(max_length=60, null=True)
 	p_pic = CloudinaryField('image', null=True)
 	created = models.DateTimeField(auto_now_add=True)
@@ -27,6 +28,7 @@ class Project(models.Model):
 
 class Voter(models.Model):
 	username = models.CharField(max_length=60)
+	display_name = models.CharField(max_length=60)
 	bio = models.CharField(max_length=60, null=True)
 	p_pic = CloudinaryField('image', null=True)
 	created = models.DateTimeField(auto_now_add=True)
