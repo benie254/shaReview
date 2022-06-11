@@ -32,3 +32,8 @@ def new_project(request):
 	title = 'Add Project'
 
 	return render(request,'user/upload.html',{"form":form},{"title":title})
+
+
+@login_required(login_url='/accounts/register')
+def home(request):
+    projects = Project.objects.all().order_by('-published').values()
