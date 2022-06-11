@@ -1,0 +1,16 @@
+{%extends 'django_registration/base.html'%}
+
+
+{%block content%}
+<div class="container" style="margin-top:5%;">
+    <div>
+      <h1 class="text-center" style="color:white;">You are in!</h1>
+        <br>
+        <h4 class="text-center">Proceed <span><a href="/">Home</a></span> or check out your <span><a href="{%url 'profile' user.id %}">Profile</a></span></h4>
+    <div style="padding-top:70.000%;position:relative;margin-top:5%;"><iframe src="https://gifer.com/embed/K9it" width="25%" height="25%" style='position:absolute;top:0;left:0;margin-left:40%;' frameBorder="0" allowFullScreen></iframe>
+
+    </div>
+    </div>
+
+</div>
+{%endblock%}
