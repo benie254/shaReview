@@ -8,6 +8,7 @@ from django.contrib import admin
 urlpatterns = [
     path('admin/', admin.site.urls,name='admin'),
     path('',views.new_project,name='new-project'),
+    url(r'^accounts/profile/(\d+)/$',views.profile,name='profile')
 ]
 
 if settings.DEBUG:
