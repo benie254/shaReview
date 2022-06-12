@@ -22,7 +22,7 @@ urlpatterns = [
     path('',include('review.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
-    path('accounts/profile/', auth_views.LoginView.as_view(template_name='user/profile.html')),
-    path('logout/', auth_views.LogoutView.as_view(template_name='registration/login.html')),
+    path('accounts/profile/', auth_views.LoginView.as_view(template_name='registration/login_success.html')),
+    path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/login.html')),
     path('tinymce/',include('tinymce.urls')),
 ]
