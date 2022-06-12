@@ -5,7 +5,12 @@ from .models import Profile,Project
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['p_pic','bio','creator']
+		fields = ['p_pic','bio','creator','display_name']
+
+class BioForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		exclude = ['p_pic','creator']
 
 
 class ProjectForm(forms.ModelForm):

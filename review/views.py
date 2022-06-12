@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.template import RequestContext
-from review.forms import ProjectForm,ProfileForm
+from review.forms import ProjectForm,ProfileForm,BioForm
 from review.models import Profile,Project
 
 # Create your views here.
@@ -62,3 +62,21 @@ def profile(request,user_id):
 	title = 'Profile'
 
 	return render(request, 'user/profile.html', {"projects": projects, "pform": pform, "profile": profile, "title": title})
+
+def bio(request,user_id):
+	current_user = request.user
+	if request.method == 'POST':
+		bioform = BioForm(request.POST)
+		if bioform.is_valid():
+			print('valid!')
+			bio = bioform.cleaned_data['bio']
+			bprofile = Profile(bio=bio)
+			bprofile.creator = current_user
+			bprofile.save()
+		return redirect('profile', user_id)
+	else:
+		bioform = BioForm()
+
+	title = 'Add/Update Bio'
+
+	return render(request, 'user/bio.html', {"bioform": bioform,"title":title})

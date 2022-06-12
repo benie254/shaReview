@@ -1,0 +1,23 @@
+{%load columns%}
+
+{%block profile_posts%}
+<div class="row" style="margin-top:2.5%;">
+{%if projects%}
+{%for col in projects|columns:3%}
+<div class="col-md-4">
+{%for project in col%}
+    <a href="{% url 'project' project.id %}">
+        <img src="{{project.landing_pic.url}}" class="img-responsive" width="100%" height="200" style="max-width:300;max-height:300;margin-top:2.5%;margin-left"  alt="user-post-image">
+    </a>
+    {%endfor%}
+    </div>
+    {%endfor%}
+    {%else%}
+    <div class="card">
+                <h5 class="card-title text-center">Your posts will appear here</h5>
+                <p class="card-text text-center">Why don't you <span><a href="{%url 'new-project' %}">share</a></span> something?</p>
+            </div>
+
+    {%endif%}
+</div>
+{%endblock%}

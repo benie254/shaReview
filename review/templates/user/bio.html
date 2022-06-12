@@ -1,0 +1,11 @@
+{%extends 'projects/base.html'%}
+{% load crispy_forms_tags %}
+
+{%block content%}
+<h2 class="text-center" style="margin-bottom:2.5%;">Add/update your profile bio &#128515;</h2>
+<form method="post" action="{%url 'profile' user.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ bioform|crispy }}
+    <button type="submit" class="btn btn-lg btn-outline-info btn-dark" value="Post" style="margin-top:1%;">Add</button>
+  </form>
+{%endblock%}
