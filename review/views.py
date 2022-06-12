@@ -36,4 +36,29 @@ def new_project(request):
 
 @login_required(login_url='/accounts/register')
 def home(request):
-    projects = Project.objects.all().order_by('-published').values()
+	projects = Project.objects.all().order_by('-published').values()
+	title = 'Home'
+	return render(request, 'projects/index.html', {"projects": projects},{"title":title})
+
+def profile(request,user_id):
+	projects = Project.objects.filter(creator_id=user_id)
+	profile = Profile.objects.filter(creator_id=user_id).last()
+	current_user = request.user
+
+	if request.method == 'POST':
+		pform = ProfileForm(request.POST, request.FILES)
+		if pform.is_valid():
+			print('valid!')
+			p_pic = pform.cleaned_data['p_pic']
+			bio = pform.cleaned_data['bio']
+			creator = pform.cleaned_data['creator']
+			profile = Profile(p_pic=p_pic,bio=bio,creator=creator)
+			profile.creator = current_user
+			profile.save()
+		return redirect('profile', user_id)
+	else:
+		pform = ProfileForm()
+
+	title = 'Profile'
+
+	return render(request, 'user/profile.html', {"projects": projects, "pform": pform, "profile": profile, "title": title})
