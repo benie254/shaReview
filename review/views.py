@@ -17,12 +17,11 @@ def new_project(request):
 		if projform.is_valid():
 			print('valid!')
 			landing_pic = projform.cleaned_data['landing_pic']
-			description = projform.cleaned_data['description']
+			short_description = projform.cleaned_data['short_description']
+			long_description = projform.cleaned_data['long_description']
 			support_pic_a = projform.cleaned_data['support_pic_a']
-			caption_a = projform.cleaned_data['caption_a']
 			support_pic_b = projform.cleaned_data['support_pic_b']
-			caption_b = projform.cleaned_data['caption_b']
-			project = Project(landing_pic=landing_pic,description=description,support_pic_a=support_pic_a,caption_a=caption_a,support_pic_b=support_pic_b,caption_b=caption_b)
+			project = Project(landing_pic=landing_pic,short_description=short_description,long_description=long_description,support_pic_a=support_pic_a,support_pic_b=support_pic_b)
 			project.creator = current_user
 			project.save()
 		return redirect('home')

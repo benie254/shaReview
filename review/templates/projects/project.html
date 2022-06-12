@@ -3,7 +3,7 @@
 
 {%block content %}
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top:2.5%;">
         <div class="col-sm-2"></div>
 
         <div class="col-lg-8">
@@ -12,24 +12,18 @@
                   <img class="card-img card-img-top" src="{{project.landing_pic.url}}">
               </div>
           </div>
-            <h6 class="text-center" style="margin-top:1%;">{{project.description}}</h6>
+            <h6 class="text-center" style="margin-top:1%;">{{project.long_description}}</h6>
         </div>
 
         <div class="col-sm-2"></div>
     </div>
-    <div class="row" style="margin-top:1.5%;">
+    <div class="row" style="margin-top:1.5%;margin-bottom:2.5%;">
         <div class="col-lg-6">
             <img class="card-img" src="{{project.support_pic_a.url}}" style="width:100%;height:350px;">
-            <div class="card-footer">
-                <small>{{project.caption_a}}</small>
-            </div>
         </div>
 
         <div class="col-lg-6">
             <img class="card-img" src="{{project.support_pic_b.url}}" style="width:100%;height:350px;">
-            <div class="card-footer">
-                <small>{{project.caption_b}}</small>
-            </div>
         </div>
     </div>
 </div>

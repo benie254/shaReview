@@ -18,16 +18,15 @@ class Profile(models.Model):
 class Project(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 	landing_pic = CloudinaryField('image')
-	description = models.CharField(max_length=60)
+	short_description = models.CharField(max_length=30)
+	long_description = models.CharField(max_length=60)
 	support_pic_a = CloudinaryField('image')
-	caption_a = models.CharField(max_length=30)
 	support_pic_b = CloudinaryField('image')
-	caption_b = models.CharField(max_length=30)
 	published = models.DateTimeField(auto_now_add=True)
 
 	@classmethod
 	def search_by_term(cls, search_term):
-		projects = cls.objects.filter(description__icontains=search_term)
+		projects = cls.objects.filter(long_description__icontains=search_term)
 		return projects
 
 

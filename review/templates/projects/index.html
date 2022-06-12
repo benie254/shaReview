@@ -4,18 +4,17 @@
 
 {%block content%}
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top:2.5%;margin-bottom:2.5%;">
         {%if projects%}
             {%for col in projects|columns:2%}
             <div class="col-lg-6">
                 {%for project in col%}
                 <div class="card" style="max-width:100%;margin-top:2.5%;">
-                    <h6 style="margin-top:1%;margin-left:1.5%;">{{project.creator}}'s <span style="font-size:smaller;">portfolio</span><span style="float:right;font-size:smaller;margin-right:1%;">Rated <strong>8.6</strong></h6>
+                    <h6 style="margin-top:1%;margin-left:1.5%;">{{project.short_description}}  <span style="float:right;font-size:smaller;margin-right:1%;">Rated <strong>8.6</strong></h6>
                     <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;">
                     <div class="card-footer">
                         <small class="text-muted">
-                            {{project.published|timesince}} ago
-                            {{project.creator}}
+                           <span style="font-size:x-small;"> {{project.published|timesince}} ago </span> | <span style="text-align:center;">{{project.creator}}</span>
                             <i style="float: right;padding-top:1%;">
                                 <a href="{% url 'project' project.id %}">
                                     Full view

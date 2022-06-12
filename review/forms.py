@@ -16,7 +16,7 @@ class BioForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
 	class Meta:
 		model = Project
-		fields = ['landing_pic','description','support_pic_a','caption_a','support_pic_b','caption_b']
+		fields = ['landing_pic','short_description','long_description','support_pic_a','support_pic_b']
 
 class ContactForm(forms.ModelForm):
 	class Meta:
