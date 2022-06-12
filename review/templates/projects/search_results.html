@@ -21,11 +21,11 @@
         {%if projects%}
 
             {%for col in projects|columns:2%}
-            <div class="col-md-4">
+            <div class="col-lg-6">
                 {%for project in col%}
                 <div class="card" style="max-width:100%;margin-top:2.5%;">
                     <div class="card-body" style="max-width:100%;">
-                        <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive modal-target" alt="{{project.description}}" id="Img 1" style="height:200px;width:75%;margin-left:5%;">
+                        <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive modal-target" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;">
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">
