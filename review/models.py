@@ -18,11 +18,11 @@ class Profile(models.Model):
 class Project(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 	landing_pic = CloudinaryField('image')
-	description = HTMLField()
+	description = models.CharField(max_length=60)
 	support_pic_a = CloudinaryField('image')
-	caption_a = HTMLField()
+	caption_a = models.CharField(max_length=30)
 	support_pic_b = CloudinaryField('image')
-	caption_b = HTMLField()
+	caption_b = models.CharField(max_length=30)
 	published = models.DateTimeField(auto_now_add=True)
 
 	@classmethod
@@ -44,5 +44,5 @@ class Contact(models.Model):
 	first_name = models.CharField(max_length=60)
 	last_name = models.CharField(max_length=60)
 	email = models.EmailField()
-	phone = models.PositiveIntegerField()
+	phone = models.PositiveIntegerField(max_length=10,default=254)
 	address = models.CharField(max_length=60)

@@ -1,12 +1,33 @@
 {%extends 'projects/base.html'%}
+{%load bootstrap5%}
 {% load crispy_forms_tags %}
 
 
 {%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
 
-<form method="post" action="{% url 'new-project' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ projform|crispy }}
-    <button type="submit" class="btn btn-sm btn-outline-success" value="Post">Post project</button>
-</form>
+    </div>
+    <div class="col-md-5">
+        <form method="post" action="{% url 'new-project' %}" enctype="multipart/form-data" style="margin-left:50%;">
+            {% csrf_token %}
+            {% bootstrap_form projform layout='inline' %}
+            <button type="submit" class="btn btn-sm btn-outline-success" value="Post" style="margin-top:1.5%;">Post project</button>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <h5 style="margin-top:5%;">Upload guide</h5>
+        <ol>
+            <li>Upload a landing page screenshot</li>
+            <li>Add a short description</li>
+            <li>Add a longer description</li>
+            <li>Add a supportive image</li>
+            <li>Add a second supportive image</li>
+        </ol>
+        <p></p>
+
+    </div>
+    </div>
+</div>
 {%endblock%}
