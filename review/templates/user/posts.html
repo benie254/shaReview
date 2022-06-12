@@ -1,13 +1,13 @@
 {%load columns%}
 
 {%block profile_posts%}
-<div class="row" style="margin-top:2.5%;">
+<div class="row" style="margin-top:2.5%;margin-bottom:2.5%;">
 {%if projects%}
 {%for col in projects|columns:3%}
-<div class="col-md-4">
+<div class="col-lg-4">
 {%for project in col%}
     <a href="{% url 'project' project.id %}">
-        <img src="{{project.landing_pic.url}}" class="img-responsive" width="100%" height="200" style="max-width:300;max-height:300;margin-top:2.5%;margin-left"  alt="user-post-image">
+        <img src="{{project.landing_pic.url}}" class="img-responsive" width="90%" height="280" style="margin-top:2.5%;margin-left"  alt="user-post-image">
     </a>
     {%endfor%}
     </div>

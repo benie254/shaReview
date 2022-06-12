@@ -1,44 +1,66 @@
 {%extends 'projects/base.html'%}
-{% load crispy_forms_tags %}
+{%load bootstrap5%}
 
 
 {%block content%}
-{%if profile.p_pic%}
-<img src="{{profile.p_pic.url}}" alt="Change profile photo" class="cuser-p-photo img-responsive" width="150" height="150" style="border-radius:50%;">
-<a href="#profile" class="btn btnp"><i class="far fa-user" aria-hidden="true"></i> Update p-pic</a>
-<form method="post" action="{% url 'profile' user.id %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ pform|crispy }}
-    <button type="submit" class="btn btn-sm btn-outline-success" value="Post">Update</button>
-</form>
-{%else%}
-<a href="#profile" class="btn btnp"><i class="far fa-user" aria-hidden="true"></i> Add p-pic</a>
-<form method="post" action="{% url 'profile' user.id %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ pform|crispy }}
-    <button type="submit" class="btn btn-sm btn-outline-success" value="Post">Update</button>
-</form>
-{%endif%}
-user {{profile.creator}}
-<span><strong>8</strong></span> projects
-<strong>Welcome to your space</strong>
-{%if profile.bio%}
-{{profile.bio}}
-<a href="{%url 'bio' user.id %}">Update bio</a>
-{%else%}
-<a href="{%url 'bio' user.id %}">Add bio</a>
-{%endif%}
+<div class="container">
+    <div class="row" style="margin-top:1.5%;">
+    {%if profile%}
+    <div class="col-sm-2">
+        <img src="{{profile.p_pic.url}}" alt="Change profile photo" class="cuser-p-photo img-responsive" width="150" height="150" style="border-radius:50%;">
+    </div>
+    <div class="col-sm-4">
+        <h1>{{profile.creator}}</h1>
+        <h6>{{profile.bio}}</h6>
+        {%else%}
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <p>You have not added a profile photo or bio</p>
+            <a href="{%url 'bio' user.id%}">Do that now?</a>
+        </div>
+        <div class="col-sm-4"></div>
+        {%endif%}
+        {%if projects%}
+        <p><span><strong>{{projects|length}}</strong></span> projects</p>
+        {%else%}
+        <p>No projects posted yet</p>
+        <a href="{%url 'new-project'%}">Wanna add something?</a>
+        {%endif%}
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+
 <hr>
+
 {%if contact%}
-{{contact.first_name}}
-{{contact.last_name}}
-{{contact.email}}
-{{contact.phone}}
-{{contact.address}}
-edit contact details <a href="{%url 'contact' user.id%}">here</a>
+    <div class="container">
+        <table class="table" style="width:80%;margin-left:10%;">
+    <thead class="table-info">
+    <tr>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+    </tr>
+  </thead>
+    <tbody class="table-success">
+    <tr>
+        <td>{{contact.first_name}}</td>
+        <td>{{contact.last_name}}</td>
+        <td>{{contact.email}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.address}}</td>
+    </tr>
+    </tbody>
+</table>
+    </div>
+
 {%else%}
 <p>Add your contact details <a href="{%url 'contact' user.id%}">here</a></p>
 {%endif%}
 <hr>
 {%include 'user/posts.html'%}
+</div>
+
 {%endblock%}
