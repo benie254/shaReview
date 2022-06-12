@@ -1,0 +1,30 @@
+{%extends 'projects/base.html'%}
+
+
+{%block content%}
+{%if profile.p_pic%}
+<img src="{{profile.p_pic.url}}" alt="Change profile photo" class="cuser-p-photo img-responsive" width="150" height="150" style="border-radius:50%;">
+<a href="#profile" class="btn btnp"><i class="far fa-user" aria-hidden="true"></i> Update p-pic</a>
+<form method="post" action="{% url 'userImages' user.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ pform|crispy }}
+    <button type="submit" class="btn btn-sm btn-outline-success" value="Post">Update</button>
+</form>
+{%else%}
+<a href="#profile" class="btn btnp"><i class="far fa-user" aria-hidden="true"></i> Add p-pic</a>
+<form method="post" action="{% url 'userImages' user.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ pform|crispy }}
+    <button type="submit" class="btn btn-sm btn-outline-success" value="Post">Update</button>
+</form>
+{%endif%}
+user {{username}}
+<span><strong>8</strong></span> projects
+<strong>Welcome to your space</strong>
+{%if profile.bio%}
+{{profile.bio}}
+<a href="{%url 'bio' user.id %}">Update bio</a>
+{%else%}
+<a href="{%url 'bio' user.id %}">Add bio</a>
+{%endif%}
+{%endblock%}
