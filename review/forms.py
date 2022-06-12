@@ -5,7 +5,8 @@ from .models import Profile,Project,Contact
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['p_pic','bio','creator','display_name']
+		fields = ['p_pic','bio','creator']
+		exclude = ['display_name']
 
 class BioForm(forms.ModelForm):
 	class Meta:
