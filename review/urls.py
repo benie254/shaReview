@@ -7,10 +7,13 @@ from django.contrib import admin
 
 urlpatterns = [
     path('admin/', admin.site.urls,name='admin'),
-    path('',views.new_project,name='new-project'),
+    path('',views.home,name='home'),
+    url(r'^project/(\d+)/$',views.project,name='project'),
     url(r'^accounts/profile/(\d+)/$',views.profile,name='profile'),
     url(r'^profile/(\d+)/bio/add-update/$',views.bio,name='bio'),
-    path('add/project/',views.new_project,name='new-project')
+    url(r'^profile/(\d+)/contact/add-update/$',views.contact,name='contact'),
+    path('add/project/',views.new_project,name='new-project'),
+    path('search/term/',views.search_results,name='search_results'),
 ]
 
 if settings.DEBUG:

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile,Project
+from .models import Profile,Project,Contact
 
 
 class ProfileForm(forms.ModelForm):
@@ -18,3 +18,8 @@ class ProjectForm(forms.ModelForm):
 		model = Project
 		fields = ['landing_pic','description','support_pic_a','caption_a','support_pic_b','caption_b']
 
+class ContactForm(forms.ModelForm):
+	class Meta:
+		model = Contact
+		fields = ['first_name','last_name','email','phone','address']
+		exclude = ['creator']

@@ -29,5 +29,16 @@ user {{profile.creator}}
 <a href="{%url 'bio' user.id %}">Add bio</a>
 {%endif%}
 <hr>
+{%if contact%}
+{{contact.first_name}}
+{{contact.last_name}}
+{{contact.email}}
+{{contact.phone}}
+{{contact.address}}
+edit contact details <a href="{%url 'contact' user.id%}">here</a>
+{%else%}
+<p>Add your contact details <a href="{%url 'contact' user.id%}">here</a></p>
+{%endif%}
+<hr>
 {%include 'user/posts.html'%}
 {%endblock%}

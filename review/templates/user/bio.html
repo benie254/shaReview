@@ -8,4 +8,12 @@
     {{ bioform|crispy }}
     <button type="submit" class="btn btn-lg btn-outline-info btn-dark" value="Post" style="margin-top:1%;">Add</button>
   </form>
+
+<h2 class="text-center" style="margin-bottom:2.5%;">Upload an image below &#128515;</h2>
+<form method="post" action="{%url 'new-project'%}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-lg btn-outline-info btn-dark" value="Post" style="margin-top:1%;">Share!</button>
+            </form>
+
 {%endblock%}

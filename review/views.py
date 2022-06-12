@@ -4,45 +4,60 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.template import RequestContext
-from review.forms import ProjectForm,ProfileForm,BioForm
-from review.models import Profile,Project
+from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm
+from review.models import Profile,Project,Contact
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def new_project(request):
 	current_user = request.user
-	if request.method == 'POST':
-		form = ProjectForm(request.POST,request.FILES)
-		if form.is_valid():
-			print('valid!')
-			landing_pic = form.cleaned_data['landing_pic']
-			description = form.cleaned_data['description']
-			support_pic_a = form.cleaned_data['support_pic_a']
-			caption_a = form.cleaned_data['caption_a']
-			support_pic_b = form.cleaned_data['support_pic_b']
-			caption_b = form.cleaned_data['caption_b']
 
-			usr_project = Project(landing_pic=landing_pic,description=description,support_pic_a=support_pic_a,caption_a=caption_a,support_pic_b=support_pic_b,caption_b=caption_b)
-			usr_project.creator = current_user
-			usr_project.save()
-		return redirect('profile')
+	if request.method == 'POST':
+		projform = ProjectForm(request.POST, request.FILES)
+		if projform.is_valid():
+			print('valid!')
+			landing_pic = projform.cleaned_data['landing_pic']
+			description = projform.cleaned_data['description']
+			support_pic_a = projform.cleaned_data['support_pic_a']
+			caption_a = projform.cleaned_data['caption_a']
+			support_pic_b = projform.cleaned_data['support_pic_b']
+			caption_b = projform.cleaned_data['caption_b']
+			project = Project(landing_pic=landing_pic,description=description,support_pic_a=support_pic_a,caption_a=caption_a,support_pic_b=support_pic_b,caption_b=caption_b)
+			project.creator = current_user
+			project.save()
+		return redirect('home')
 	else:
-		form = ProjectForm()
+		projform = ProjectForm()
 
 	title = 'Add Project'
 
-	return render(request,'user/upload.html',{"form":form},{"title":title})
+	return render(request, 'user/upload.html',{"projform": projform,"title":title})
+
+def search_results(request):
+
+	if 'project' in request.GET and request.GET["project"]:
+		search_term = request.GET.get("project")
+		searched_projects = Project.search_by_term(search_term)
+		message = f"{search_term}"
+
+		return render(request,'projects/search_results.html',{"message":message,"projects":searched_projects})
+	else:
+		message = "You haven't searched for an image yet"
+
+		return render(request,'projects/search_results.html',{"message":message})
 
 
-@login_required(login_url='/accounts/register')
+
 def home(request):
-	projects = Project.objects.all().order_by('-published').values()
+	projects = Project.objects.all()
+
 	title = 'Home'
-	return render(request, 'projects/index.html', {"projects": projects},{"title":title})
+	return render(request, 'projects/index.html', {"projects": projects,"title": title})
 
 def profile(request,user_id):
 	projects = Project.objects.filter(creator_id=user_id)
 	profile = Profile.objects.filter(creator_id=user_id).last()
+	contact = Contact.objects.filter(pk=user_id).first()
 	current_user = request.user
 
 	if request.method == 'POST':
@@ -61,7 +76,7 @@ def profile(request,user_id):
 
 	title = 'Profile'
 
-	return render(request, 'user/profile.html', {"projects": projects, "pform": pform, "profile": profile, "title": title})
+	return render(request, 'user/profile.html', {"projects": projects, "pform": pform, "profile": profile, "title": title,"contact":contact})
 
 def bio(request,user_id):
 	current_user = request.user
@@ -80,3 +95,38 @@ def bio(request,user_id):
 	title = 'Add/Update Bio'
 
 	return render(request, 'user/bio.html', {"bioform": bioform,"title":title})
+
+
+@login_required(login_url='/accounts/login')
+def project(request,project_id):
+	try:
+		project = Project.objects.get(id=project_id)
+
+	except DoesNotExist:
+		raise Http404()
+
+	title = 'Project'
+
+	return render(request,'projects/project.html',{"project":project,"title":title})
+
+def contact(request,user_id):
+	current_user = request.user
+	if request.method == 'POST':
+		contform = ContactForm(request.POST)
+		if contform.is_valid():
+			print('valid!')
+			first_name = contform.cleaned_data['first_name']
+			last_name = contform.cleaned_data['last_name']
+			email = contform.cleaned_data['email']
+			phone = contform.cleaned_data['phone']
+			address = contform.cleaned_data['address']
+			pcontact = Contact(first_name=first_name,last_name=last_name,email=email,phone=phone,address=address)
+			pcontact.creator = current_user
+			pcontact.save()
+		return redirect('profile', user_id)
+	else:
+		contform = ContactForm()
+
+	title = 'Contact Info'
+
+	return render(request, 'user/contact.html', {"contform": contform,"title":title})

@@ -25,6 +25,11 @@ class Project(models.Model):
 	caption_b = HTMLField()
 	published = models.DateTimeField(auto_now_add=True)
 
+	@classmethod
+	def search_by_term(cls, search_term):
+		projects = cls.objects.filter(description__icontains=search_term)
+		return projects
+
 
 class Voter(models.Model):
 	username = models.CharField(max_length=60)
@@ -32,3 +37,12 @@ class Voter(models.Model):
 	bio = models.CharField(max_length=60, null=True)
 	p_pic = CloudinaryField('image', null=True)
 	created = models.DateTimeField(auto_now_add=True)
+
+
+class Contact(models.Model):
+	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+	first_name = models.CharField(max_length=60)
+	last_name = models.CharField(max_length=60)
+	email = models.EmailField()
+	phone = models.PositiveIntegerField()
+	address = models.CharField(max_length=60)
