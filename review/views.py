@@ -114,6 +114,13 @@ def project(request,project_id):
 
 	return render(request,'projects/project.html',{"project":project,"title":title})
 
+@login_required(login_url='/accounts/login')
+def api(request):
+	date = dt.date.today()
+	title = 'API'
+
+	return render(request,'api/api.html',{"date":date,"title":title})
+
 def contact(request,user_id):
 	current_user = request.user
 	if request.method == 'POST':

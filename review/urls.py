@@ -18,6 +18,7 @@ urlpatterns = [
     path('search/term/',views.search_results,name='search_results'),
     path('api/projects/',views.ProjectList.as_view()),
     path('api/profiles/',views.ProfileList.as_view()),
+    path('api/',views.api,name='api'),
 ]
 
 if settings.DEBUG:
