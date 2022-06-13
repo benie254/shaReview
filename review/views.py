@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from review.serializer import ProjectSerializer,ProfileSerializer
+from review.permissions import IsAdminOrReadOnly,IsAuthenticatedOrReadOnly
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -137,12 +138,15 @@ def contact(request,user_id):
 
 
 class ProjectList(APIView):
+	permission_classes = (IsAdminOrReadOnly,IsAuthenticatedOrReadOnly)
 	def get(self,request,format=None):
 		all_projects = Project.objects.all()
 		serializers = ProjectSerializer(all_projects,many=True)
 		return Response(serializers.data)
 
+class ProfileList(APIView):
+	permission_classes = (IsAdminOrReadOnly, IsAuthenticatedOrReadOnly)
 	def get(self,request,format=None):
 		all_profiles = Profile.objects.all()
-		serialzers = ProfileSerializer(all_profiles,many=True)
+		serialzers = ProfileSerializer(all_profiles, many=True)
 		return Response(serialzers.data)
