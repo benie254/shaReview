@@ -18,15 +18,14 @@
         {%else%}
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <p>You have not added a profile photo or bio</p>
-            <a href="{%url 'bio' user.id%}">Do that now?</a>
+            <p>You have not added a profile photo or bio. <a href="{%url 'bio' user.id%}">Add something now?</a></p>
         </div>
         <div class="col-sm-4"></div>
         {%endif%}
         {%if projects%}
         <p><span><strong>{{projects|length}}</strong></span> projects</p>
         {%else%}
-        <p>No projects posted yet</p>
+        <p>0 projects</p>
         <a href="{%url 'new-project'%}">Wanna add something?</a>
         {%endif%}
     </div>
