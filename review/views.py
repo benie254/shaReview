@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.template import RequestContext
-from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm
+from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm,NewUsersForm
 from review.models import Profile,Project,Contact
 from django.http import JsonResponse
 
@@ -132,13 +132,3 @@ def contact(request,user_id):
 
 	return render(request, 'user/contact.html', {"contform": contform,"title":title})
 
-
-def welcome(request):
-	name = request.POST.get('your_name')
-	email = request.POST.get('email')
-
-	recipient = NewUsers(name=name,email=email)
-	recipient.save()
-	send_welcome_email(name,email)
-	data = {'success':'You have successfully registered to shaReview'}
-	return JsonResponse(data)

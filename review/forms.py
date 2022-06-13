@@ -24,3 +24,4 @@ class ContactForm(forms.ModelForm):
 		model = Contact
 		fields = ['first_name','last_name','email','phone','address']
 		exclude = ['creator']
+
