@@ -4,12 +4,12 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.template import RequestContext
-from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm,NewUsersForm
+from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm
 from review.models import Profile,Project,Contact
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from review.serializer import ProjectSerializer
+from review.serializer import ProjectSerializer,ProfileSerializer
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -141,3 +141,8 @@ class ProjectList(APIView):
 		all_projects = Project.objects.all()
 		serializers = ProjectSerializer(all_projects,many=True)
 		return Response(serializers.data)
+
+	def get(self,request,format=None):
+		all_profiles = Profile.objects.all()
+		serialzers = ProfileSerializer(all_profiles,many=True)
+		return Response(serialzers.data)

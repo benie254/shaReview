@@ -16,7 +16,8 @@ urlpatterns = [
     url(r'^profile/(\d+)/contact/add-update/$',views.contact,name='contact'),
     path('add/project/',views.new_project,name='new-project'),
     path('search/term/',views.search_results,name='search_results'),
-    url(r'^api/project/$',views.ProjectList.as_view()),
+    path('api/projects/',views.ProjectList.as_view()),
+    path('api/profiles/',views.ProjectList.as_view()),
 ]
 
 if settings.DEBUG:

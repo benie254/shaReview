@@ -9,14 +9,14 @@ from tinymce.models import HTMLField
 # Create your models here.
 class Profile(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
-	display_name = models.CharField(max_length=60)
+	username = models.CharField(max_length=60)
 	bio = models.CharField(max_length=60, null=True)
 	p_pic = CloudinaryField('image', null=True)
 	created = models.DateTimeField(auto_now_add=True)
 
 
 class Project(models.Model):
-	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+	creator_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 	landing_pic = CloudinaryField('image')
 	short_description = models.CharField(max_length=30)
 	long_description = models.CharField(max_length=60)
@@ -43,5 +43,5 @@ class Contact(models.Model):
 	first_name = models.CharField(max_length=60)
 	last_name = models.CharField(max_length=60)
 	email = models.EmailField()
-	phone = models.PositiveIntegerField(max_length=10,default=254)
+	phone = models.PositiveIntegerField(default=254)
 	address = models.CharField(max_length=60)

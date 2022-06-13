@@ -18,7 +18,7 @@ from decouple import config,Csv
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from crispy_forms_foundation.settings import *
+# from crispy_forms_foundation.settings import *
 
 
 # MODE = config("MODE",default="dev")
@@ -63,13 +63,14 @@ SECRET_KEY = 'django-insecure-krme98p9jj(-egncmlm==an$^f+jcgec93@tjn^hzk_3@k=y$k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'review',
+    'django_registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
