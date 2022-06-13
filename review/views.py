@@ -6,6 +6,7 @@ import datetime as dt
 from django.template import RequestContext
 from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm
 from review.models import Profile,Project,Contact
+from django.http import JsonResponse
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -48,10 +49,11 @@ def search_results(request):
 
 @login_required(login_url='/accounts/login/')
 def home(request):
+	date = dt.date.today()
 	projects = Project.objects.all()
 
 	title = 'Home'
-	return render(request, 'projects/index.html', {"projects": projects,"title": title})
+	return render(request, 'projects/index.html', {"projects": projects,"title": title,"date":date})
 
 def profile(request,user_id):
 	projects = Project.objects.filter(creator_id=user_id)
@@ -129,3 +131,14 @@ def contact(request,user_id):
 	title = 'Contact Info'
 
 	return render(request, 'user/contact.html', {"contform": contform,"title":title})
+
+
+def welcome(request):
+	name = request.POST.get('your_name')
+	email = request.POST.get('email')
+
+	recipient = NewUsers(name=name,email=email)
+	recipient.save()
+	send_welcome_email(name,email)
+	data = {'success':'You have successfully registered to shaReview'}
+	return JsonResponse(data)
