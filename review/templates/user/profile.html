@@ -2,10 +2,11 @@
 {%load static%}
 {%load bootstrap5%}
 
+
+{%block content%}
 <body style="background-image:url('{%static 'photos/panorama-7245029_1920.jpg' %}');background-size:cover;background-position:cover;background-repeat:no-repeat;color:white;height:100vh;">
 
 </body>
-{%block content%}
 <div class="container">
     <div class="row" style="margin-top:1.5%;">
     {%if profile%}
@@ -26,7 +27,6 @@
         <p><span><strong>{{projects|length}}</strong></span> projects</p>
         {%else%}
         <p>0 projects</p>
-        <a href="{%url 'new-project'%}">Wanna add something?</a>
         {%endif%}
     </div>
     <div class="col-lg-4"></div>
