@@ -1,30 +1,37 @@
 {%extends 'projects/base.html'%}
 {%load bootstrap5%}
-{% load crispy_forms_tags %}
+{%load static%}
 
 
 {%block content%}
+<body style="background-image:url('{%static 'photos/raindrop-1913347_1920.jpg' %}');background-size:cover;background-position:cover;background-repeat:no-repeat;">
+
+</body>
 <div class="container">
     <div class="row" style="margin-top:2.5%;">
         <div class="col-sm-2">
 
     </div>
     <div class="col-md-5">
-        <form method="post" action="{% url 'new-project' %}" enctype="multipart/form-data" style="margin-left:50%;">
+        <form method="post" action="{% url 'new-project' %}" enctype="multipart/form-data" style="text-align:center;">
             {% csrf_token %}
             {% bootstrap_form projform layout='inline' %}
-            <button type="submit" class="btn btn-sm btn-outline-success" value="Post" style="margin-top:1.5%;">Post project</button>
+            <button type="submit" class="btn btn-sm btn-success" value="Post" style="margin-top:1.5%;">Post project</button>
         </form>
     </div>
     <div class="col-md-5">
-        <h5 style="margin-top:5%;">Upload guide</h5>
-        <ol>
-            <li>Upload a landing page screenshot</li>
-            <li>Add a short description</li>
-            <li>Add a longer description</li>
-            <li>Add a supportive image</li>
-            <li>Add a second supportive image</li>
-        </ol>
+        <div class="card" style="margin-top:5%;opacity:0.75;">
+            <h5 style="margin-top:1.5%;margin-left:1.5%;" class="card-title">Upload guide</h5>
+            <ol>
+                <li class="card-text">Upload a landing page screenshot</li>
+                <li class="card-text">Add a short description</li>
+                <li class="card-text">Add a longer description</li>
+                <li class="card-text">Add a supportive image</li>
+                <li class="card-text">Add a second supportive image</li>
+            </ol>
+        </div>
+
+
         <p></p>
 
     </div>
