@@ -7,6 +7,9 @@ from django.template import RequestContext
 from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm,NewUsersForm
 from review.models import Profile,Project,Contact
 from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from review.serializer import ProjectSerializer
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -132,3 +135,9 @@ def contact(request,user_id):
 
 	return render(request, 'user/contact.html', {"contform": contform,"title":title})
 
+
+class ProjectList(APIView):
+	def get(self,request,format=None):
+		all_projects = Project.objects.all()
+		serializers = ProjectSerializer(all_projects,many=True)
+		return Response(serializers.data)
