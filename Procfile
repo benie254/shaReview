@@ -1,0 +1,1 @@
+web: gunicorn shaRev.wsgi --log-file -
