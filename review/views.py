@@ -46,7 +46,7 @@ def search_results(request):
 		return render(request,'projects/search_results.html',{"message":message})
 
 
-
+@login_required(login_url='/accounts/login/')
 def home(request):
 	projects = Project.objects.all()
 
