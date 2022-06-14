@@ -19,6 +19,7 @@ urlpatterns = [
     path('api/projects/',views.ProjectList.as_view()),
     path('api/profiles/',views.ProfileList.as_view()),
     path('api/',views.api,name='api'),
+    # path('projects/<int:project_id>/vote/', views.vote, name ='vote'),
 ]
 
 if settings.DEBUG:

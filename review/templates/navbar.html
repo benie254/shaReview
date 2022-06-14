@@ -9,7 +9,11 @@
   <li class="nav-item">
     <a class="nav-link" aria-current="page" href="/" style="border-style:ridge;">Home</a>
   </li>
-  <form class="d-flex" role="search" style="margin-left:5%;" action="{%url 'search_results'%}">
+  <a class="nav-item" href="{%url 'api'%}" style="margin-left:2.5%;">
+    <img src="{%static 'photos/bubbles-1985153_640.png'%}" alt="" width="40" height="38" style="background-color:#f5ebe0;border-radius:50%;margin-top:0.25%;margin-left:1.5%;">
+    <a class="nav-link" href="{%url 'api'%}" style="border-style:groove;">API</a>
+  </a>
+  <form class="d-flex" role="search" action="{%url 'search_results'%}" style="margin-left:1.5%;">
     <button style="width:15%;margin-top:2%;" class="btn btn-sm btn-outline-light" type="submit"><svg aria-label="Search" color="#8e8e8e" fill="#8e8e8e" height="16" role="img" viewBox="0 0 24 24" width="16"><path d="M19 10.5A8.5 8.5 0 1110.5 2a8.5 8.5 0 018.5 8.5z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line></svg></button>
     <input class="form-control me-2" type="search" placeholder="Search a term" aria-label="Search" name="project" style="font-family:'Lemonada';">
   </form>
@@ -18,9 +22,6 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{%url 'profile' user.id%}" style="border-style:groove;">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{%url 'api'%}" style="border-style:groove;">API</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{%url 'logout'%}" style="border-style:groove;">Logout</a>

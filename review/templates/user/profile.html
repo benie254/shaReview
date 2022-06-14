@@ -4,9 +4,7 @@
 
 
 {%block content%}
-<body style="background-image:url('{%static 'photos/panorama-7245029_1920.jpg' %}');background-size:cover;background-position:cover;background-repeat:no-repeat;color:white;height:100vh;">
-
-</body>
+<body style="background-image:url('{%static 'photos/panorama-7245029_1920.jpg' %}');background-size:cover;background-position:cover;background-repeat:repeat;color:white;height:100vh;">
 <div class="container">
     <div class="row" style="margin-top:1.5%;">
     {%if profile%}
@@ -19,12 +17,13 @@
         {%else%}
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <p>You have not added a profile photo or bio. <a href="{%url 'bio' user.id%}">Add something now?</a></p>
+            <p>You have not added a profile photo or bio. <a href="{%url 'bio' user.id%}" type="button" class="btn btn-sm btn-outline-info btn-dark">Add now?</a></p>
+            <p><span><strong>{{projects|length}}</strong></span> projects</p>
         </div>
         <div class="col-sm-4"></div>
         {%endif%}
         {%if projects%}
-        <p><span><strong>{{projects|length}}</strong></span> projects</p>
+
         {%else%}
         <p>0 projects</p>
         {%endif%}
@@ -62,10 +61,22 @@
 
 
 {%else%}
-<p>Add your contact details <a href="{%url 'contact' user.id%}">here</a></p>
+    <div class="container">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p>Add your contact details <a href="{%url 'contact' user.id%}" type="button" class="btn btn-outline-info btn-dark btn-sm">here</a></p>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
 {%endif%}
 <hr>
-{%include 'user/posts.html'%}
+    <div class="container">
+      {%include 'user/posts.html'%}
+    </div>
+
 </div>
+</body>
+
 
 {%endblock%}

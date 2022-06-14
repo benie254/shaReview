@@ -1,11 +1,26 @@
 {%extends 'projects/base.html'%}
 {% load crispy_forms_tags %}
+{%load static%}
+{%load bootstrap5%}
 
 {%block content%}
-<h2 class="text-center" style="margin-bottom:2.5%;">Add/update your profile bio &#128515;</h2>
-<form method="post" action="{%url 'contact' user.id%}" enctype="multipart/form-data">
+<body style="background-image:url('{%static 'photos/raindrop-1913347_1920.jpg' %}');background-size:cover;background-position:cover;background-repeat:no-repeat;height:100vh;">
+
+</body>
+<div class="container">
+
+<div class="row" style="margin-top:2.5%;">
+        <div class="col-sm-2">
+
+    </div>
+    <div class="col-md-5" style="margin-left:15%;">
+<h2 class="text-center" style="margin-bottom:2.5%;">Add your contact details</h2>
+<form method="post" action="{%url 'contact' user.id%}" enctype="multipart/form-data" style="text-align:center;">
     {% csrf_token %}
-    {{ contform|crispy }}
-    <button type="submit" class="btn btn-lg btn-outline-info btn-dark" value="Post" style="margin-top:1%;">Add</button>
+    {%bootstrap_form contform layout='inline' %}
+    <button type="submit" class="btn btn-sm btn-light btn-outline-dark" value="Post" style="margin-top:1%;">Add</button>
   </form>
+    </div>
+</div>
+</div>
 {%endblock%}

@@ -21,7 +21,6 @@
                 {%for project in col%}
                 <figure>
                     <img src="{{project.landing_pic.url}}" class="rounded figure-img rounded img-responsive featured" height="30" width="40" style="max-width:100%;">
-                    <figcaption class="figure-caption" style="font-size:10px;"><strong>8.6</strong></figcaption>
                 </figure>
                 {%endfor%}
             </div>
@@ -37,8 +36,8 @@
             <div class="col-lg-6">
                 {%for project in col%}
                 <div class="card" style="max-width:100%;margin-top:2.5%;">
-                    <h6 style="margin-top:1%;margin-left:1.5%;">{{project.short_description}}  <span style="float:right;font-size:smaller;margin-right:1%;">Rated <strong>8.6</strong></h6>
-                    <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;">
+                    <h6 style="margin-top:1%;margin-left:1.5%;">{{project.short_description}}  <span style="float:right;font-size:smaller;margin-right:1%;"><a href="{% url 'project' project.id %}">Rate</a></h6>
+                    <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive zoom" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;">
                     <div class="card-footer">
                         <small class="text-muted">
                            <span style="font-size:x-small;"> {{project.published|timesince}} ago </span> | <span style="text-align:center;">{{project.creator}}</span>

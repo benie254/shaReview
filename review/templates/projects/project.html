@@ -1,8 +1,10 @@
 {%extends 'projects/base.html'%}
-
+{%load bootstrap5%}
+{%load bootstrap4%}
+{%load crispy_forms_tags%}
 
 {%block content %}
-<body style="background-color:#F3EADB;">
+<body style="background-color:#F3EADB;" onload="getAverage();">
 
 </body>
 <div class="container">
@@ -16,6 +18,29 @@
               </div>
           </div>
             <h6 class="text-center" style="margin-top:1.5%;">{{project.long_description}}</h6>
+            votes:
+            {{votes}}
+            <form method="post" action="{% url 'project' project.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ voteform|crispy }}
+                <input type="submit" onClick="voteAverage()" class="btn btn-sm btn-outline-success" value="Vote">
+            </form>
+            <h5>New</h5>
+
+            <h5>New Results</h5>
+            <ul class ="list-group mb-5">
+                {% for vote in project.vote_set.all %}
+                <li class ="list-group-item">
+                    voted {{ vote.your_vote }} <span class ="badge badge-success float-right">{{ vote.your_vote }}
+                    vote {{ vote.votes | pluralize }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+
+            total<h6 id="total-votes">{{total}}</h6>
+            last vote<h6 id="last-vote">{{last_vote.id}}</h6>
+            Average: <h1 id="average"></h1> RATED
+            {{average.your_vote__avg}}
         </div>
 
         <div class="col-sm-2"></div>

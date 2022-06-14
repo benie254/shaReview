@@ -86,6 +86,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'rest_framework',
     'rest_framework.authtoken',
+    'vote',
+    'django_registration',
 ]
 
 REST_FRAMEWORK = {
@@ -153,7 +155,7 @@ WSGI_APPLICATION = 'shaRev.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shareview',
+        'NAME': 'rev',
         'USER': 'benie',
         'PASSWORD': '12345'
     }

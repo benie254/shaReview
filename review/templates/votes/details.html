@@ -1,0 +1,11 @@
+<form action="{% url 'reviews:vote' project.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for vote in project.choice_set.all %}
+        <input type="radio" name="vote" id="vote{{ forloop.counter }}" value="{{ vote.id }}">
+        <label for="vote{{ forloop.counter }}">{{ vote.choice_text }}</label><br>
+    {% endfor %}
+</fieldset>
+<input type="submit" value="Vote">
+</form>

@@ -23,6 +23,7 @@ whitenoise = "*"
 psycopg2 = "*"
 pytz = "*"
 gunicorn = "*"
+django-vote = "*"
 
 [dev-packages]
 

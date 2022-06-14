@@ -1,10 +1,11 @@
 {%extends 'projects/base.html'%}
+{%load static%}
 
 {%block content%}
-<body style="background-color:#F3EADB;">
+<body style="background-image:url('{%static 'photos/raindrop-1913347_1920.jpg' %}');background-size:cover;background-position:cover;background-repeat:no-repeat;height:100vh;">
 
 </body>
-<div class="container" style="margin-top:15%;">
+<div class="container" style="margin-top:5%;">
     <div>
         <div class="rounded" style="background-color:#303030;opacity:0.9;width:35%;margin-left:33.5%;padding:2.5%;width:50%;">
             <h1 class="text-center" style="color:white;">Our API Endpoints</h1>
@@ -12,11 +13,12 @@
             <p style="color:white;">From these, you can GET requests for:</p>
             <ol>
                 <li style="color:white;">All posted projects</li>
-                <small><a href="/api/projects/">Click here to query all projects</a></small>
+                <small><a href="/api/projects/" type="button" class="btn btn-sm btn-outline-info">QUERY projects</a></small>
                 <li style="color:white;">All project-creator profiles</li>
-                <small><a href="/api/profiles/">Click here to query all profiles</a></small>
+                <small><a href="/api/profiles/" type="button" class="btn btn-sm btn-outline-info">QUERY profiles</a></small>
             </ol>
             <h5 style="color:white;">Have fun!</h5>
+        </div>
     </div>
 </div>
 {%endblock%}

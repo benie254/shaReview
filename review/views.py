@@ -1,16 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.template import RequestContext
-from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm
-from review.models import Profile,Project,Contact
+from review.forms import ProjectForm,ProfileForm,BioForm,ContactForm,VoteForm
+from review.models import Profile,Project,Contact,vote
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from review.serializer import ProjectSerializer,ProfileSerializer
 from review.permissions import IsAdminOrReadOnly,IsAuthenticatedOrReadOnly
+from django.urls import reverse
+from django.db.models import Sum,Count,Avg
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -54,7 +56,7 @@ def search_results(request):
 @login_required(login_url='/accounts/login/')
 def home(request):
 	date = dt.date.today()
-	projects = Project.objects.all()
+	projects = Project.objects.all()[:6]
 
 	title = 'Home'
 	return render(request, 'projects/index.html', {"projects": projects,"title": title,"date":date})
@@ -71,8 +73,8 @@ def profile(request,user_id):
 			print('valid!')
 			p_pic = pform.cleaned_data['p_pic']
 			bio = pform.cleaned_data['bio']
-			creator = pform.cleaned_data['creator']
-			profile = Profile(p_pic=p_pic,bio=bio,creator=creator)
+			username = pform.cleaned_data['username']
+			profile = Profile(p_pic=p_pic,bio=bio,username=username)
 			profile.creator = current_user
 			profile.save()
 		return redirect('profile', user_id)
@@ -83,36 +85,127 @@ def profile(request,user_id):
 
 	return render(request, 'user/profile.html', {"projects": projects, "pform": pform, "profile": profile, "title": title,"contact":contact})
 
+# def bio(request,user_id):
+# 	current_user = request.user
+# 	if request.method == 'POST':
+# 		bioform = BioForm(request.POST)
+# 		if bioform.is_valid():
+# 			print('valid!')
+# 			bio = bioform.cleaned_data['bio']
+# 			bprofile = Profile(bio=bio)
+# 			bprofile.creator = current_user
+# 			bprofile.save()
+# 			return redirect('profile', user_id)
+# 	else:
+# 		bioform = BioForm()
+#
+# 	title = 'Add/Update Bio'
+#
+# 	return render(request, 'user/bio.html', {"bioform": bioform,"title":title})
+
 def bio(request,user_id):
 	current_user = request.user
 	if request.method == 'POST':
-		bioform = BioForm(request.POST)
-		if bioform.is_valid():
+		profileform = ProfileForm(request.POST)
+		if profileform.is_valid():
 			print('valid!')
-			bio = bioform.cleaned_data['bio']
-			bprofile = Profile(bio=bio)
-			bprofile.creator = current_user
-			bprofile.save()
-		return redirect('profile', user_id)
+			username = profileform.cleaned_data['username']
+			p_pic = profileform.cleaned_data['p_pic']
+			bio = profileform.cleaned_data['bio']
+			profile = Profile(p_pic=p_pic, bio=bio,username=username)
+			profile.creator = current_user
+			profile.save()
+			return redirect('profile', user_id)
 	else:
-		bioform = BioForm()
+		profileform = ProfileForm()
 
 	title = 'Add/Update Bio'
 
-	return render(request, 'user/bio.html', {"bioform": bioform,"title":title})
+	return render(request, 'user/bio.html', {"profileform": profileform,"title":title})
 
 
-@login_required(login_url='/accounts/login')
+
+
 def project(request,project_id):
-	try:
-		project = Project.objects.get(id=project_id)
+	total = vote.objects.filter(project__id=project_id).aggregate(TOTAL=Sum('your_vote'))['TOTAL']
+	total_votes = vote.objects.filter(project__id=project_id).annotate(num_votes=Count('your_vote'))
+	# last_vote = vote.objects.filter('id')
+	# last_vote = vote.objects.filter(project__id=project_id).latest('published')
+	# try:
+	average = vote.objects.filter(project__id=project_id).aggregate(Avg('your_vote'))
+	project = Project.objects.get(id=project_id)
+	# votes = vote.objects.filter(project_id=project_id)
+	# votes = vote.objects.get(project_id=project_id)
 
-	except DoesNotExist:
-		raise Http404()
+	# except DoesNotExist:
+	# 	raise Http404()
+
+	current_user = request.user
+	if request.method == 'POST':
+		voteform = VoteForm(request.POST)
+		if voteform.is_valid():
+			print('valid!')
+			your_vote = voteform.cleaned_data['your_vote']
+			project_vote = vote(your_vote=your_vote)
+			project_vote.project = project
+			project_vote.save()
+		return redirect('project',project_id)
+	else:
+		voteform = VoteForm()
+
+	# votes = project.vote.all()
+	# print(votes)
+	print(average)
+	# print(last_vote)
 
 	title = 'Project'
 
-	return render(request,'projects/project.html',{"project":project,"title":title})
+	try:
+		selected_choice = project.vote_set.get(pk=request.POST['vote'])
+	except (KeyError, vote.DoesNotExist):
+		# Redisplay the question voting form.
+		return render(request, 'projects/project.html', {
+			'project': project,
+			'error_message': "You didn't select a choice.","voteform":voteform,"total":total,"total_votes":total_votes,"average":average})
+	else:
+		selected_choice.your_vote += 1
+		selected_choice.save()
+		# Always return an HttpResponseRedirect after successfully dealing
+		# with POST data. This prevents data from being posted twice if a
+		# user hits the Back button.
+		return HttpResponseRedirect(reverse('project', args=(project.id,)),{"voteform":voteform})
+
+def vote_project(request,project_id):
+	project = get_object_or_404(Project, pk=project_id)
+
+# def review(request,user_id):
+# 	review = Project.objects.get(pk=1)
+#
+# 	# Up vote to the object
+# 	upvotes = review.votes.up(user_id)
+#
+# 	# Down vote to the object
+# 	downvotes = review.votes.down(user_id)
+#
+# 	# Removes a vote from the object
+# 	delete_votes = review.votes.delete(user_id)
+#
+# 	# Check if the user already voted (up) the object
+# 	check_votes = review.votes.exists(user_id)
+#
+# 	# Check if the user already voted (down) the object
+# 	# import UP, DOWN from vote.models
+# 	review.votes.exists(user_id, action=DOWN)
+#
+# 	# Returns the number of votes for the object
+# 	review.votes.count()
+#
+# 	# Returns a list of users who voted and their voting date
+# 	review.votes.user_ids()
+#
+# 	# Returns all instances voted by user
+# 	Project.votes.all(user_id)
+
 
 @login_required(login_url='/accounts/login')
 def api(request):

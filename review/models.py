@@ -4,9 +4,19 @@ from location_field.models.plain import PlainLocationField
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
+class voter(models.Model):
+	username = models.CharField(max_length=60)
+	display_name = models.CharField(max_length=60)
+	bio = models.CharField(max_length=60, null=True)
+	p_pic = CloudinaryField('image', null=True)
+	created = models.DateTimeField(auto_now_add=True)
+
+
+
 
 
 class Project(models.Model):
@@ -23,6 +33,15 @@ class Project(models.Model):
 		projects = cls.objects.filter(long_description__icontains=search_term)
 		return projects
 
+class vote(models.Model):
+	project = models.ForeignKey(Project, on_delete=models.DO_NOTHING,null=True)
+	choice_text = models.CharField(max_length=200, null=True)
+	your_vote = models.IntegerField()
+	published = models.DateTimeField(auto_now_add=True,null=True)
+
+
+
+
 class Profile(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 	username = models.CharField(max_length=60)
@@ -31,12 +50,7 @@ class Profile(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
 
 
-class Voter(models.Model):
-	username = models.CharField(max_length=60)
-	display_name = models.CharField(max_length=60)
-	bio = models.CharField(max_length=60, null=True)
-	p_pic = CloudinaryField('image', null=True)
-	created = models.DateTimeField(auto_now_add=True)
+
 
 
 class Contact(models.Model):
