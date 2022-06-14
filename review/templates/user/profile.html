@@ -18,12 +18,11 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <p>You have not added a profile photo or bio. <a href="{%url 'bio' user.id%}" type="button" class="btn btn-sm btn-outline-info btn-dark">Add now?</a></p>
-            <p><span><strong>{{projects|length}}</strong></span> projects</p>
         </div>
         <div class="col-sm-4"></div>
         {%endif%}
         {%if projects%}
-
+        <p><span><strong>{{projects|length}}</strong></span> projects</p>
         {%else%}
         <p>0 projects</p>
         {%endif%}
