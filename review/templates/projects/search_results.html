@@ -35,11 +35,11 @@
                         <small class="text-muted">
                             {{project.published|timesince}} ago <img src="{{project.creator.p_pic.url}}" width="10%" class="rounded">
                             | {{project.creator}}
-                            <i style="float: right;padding-top:1%;">
+                            <small style="float: right;padding-top:1%;">
                                 <a href="{% url 'project' project.id %}" type="button" class="btn btn-dark btn-outline-info">
                                     Project details
                                 </a>
-                            </i>
+                            </small>
                         </small>
                     </div>
                 </div>

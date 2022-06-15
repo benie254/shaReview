@@ -26,7 +26,7 @@
                     <img class="card-img card-img-top zee" src="{{project.landing_pic.url}}">
                 </div>
             </div>
-            <h6 class="text-center" style="margin-top:1.5%;">{{project.long_description}}</h6>
+            <p class="text-center" style="margin-top:1.5%;">{{project.long_description}}</p>
             <p class="outline-info dark">Live site: <span><code id="url">{{project.demo_url}}</code> <button type="button" class="btn btn-dark btn-outline-info btn-sm" onClick="copyToClip('#url')">Copy link</button> </span> or <a type="button" class="btn btn-dark btn-outline-info btn-sm" href="{{project.demo_url}}">Click here</a></p>
         </div>
 
@@ -45,7 +45,7 @@
             <ul class ="list-group mb-5" style="margin-top:1.5%;">
                 {% for vote in project.vote_set.all %}
                 <li class ="list-group-item" style="font-size:small;">
-                    <span style="font-weight:bold;">design: {{ vote.vote_design }}, usability: {{vote.vote_usability}}, content: {{vote.vote_content}}</span>
+                    <span style="font-weight:bold;"> <img src="{%static 'photos/bullet-2157465_640.png'%}" height="15" width="15" style="border-radius:50%;margin-bottom:1.5%;"> design: {{ vote.vote_design }} <img src="{%static 'photos/coding-1294361_640.png'%}" height="15" width="15" style="border-radius:50%;"> usability: {{vote.vote_usability}} <img src="{%static 'photos/list-1882326_640.png'%}" height="13.5" width="13.5" style="border-radius:50%;"> content: {{vote.vote_content}}</span>
                     <span style="font-size:smaller;">{{vote.project.creator}}<span> <img src="{%static 'photos/avatar-3814049_640.png' %}" height="15" width="15" style="border-radius:50%;"></span>
                 </li>
                 {% endfor %}

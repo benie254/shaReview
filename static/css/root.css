@@ -1,3 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fascinate+Inline&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Skranji:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Faster+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amarante&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap');
+
+h1{
+font-size:54px;
+}
+h1,h2,.nav-tit,.nav-it{
+font-family: 'Fascinate';
+}
+h2{
+font-size:40px;
+}
+.navbar-brand{
+font-family: 'Fascinate Inline';
+font-size:30px;
+}
+.nav-tit{
+font-size:25px;
+}
+.nav-it-prof{
+font-family: 'Faster One';
+}
+.nav-it,.nav-it-prof{
+font-size:20px;
+}
+h3,h4,thead{
+font-family:'Skranji';
+}
+h5,h6,form{
+font-family: 'Potta One';
+}
+p,tbody{
+font-family: 'Amarante';
+}
+li,small,input{
+font-family: 'Kalam';
+}
 .featured{
 transition: transform .2s;
 }

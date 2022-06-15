@@ -28,8 +28,9 @@
 </div>
 
 <div class="container" style="background-color:#F3EADB;padding:1.5%;margin-bottom:2.5%;">
-    <div class="row" style="margin-top:2.5%;margin-bottom:2.5%;">
+    <div class="row" style="margin-top:1%;margin-bottom:2.5%;">
         {%if projects%}
+        <h1 class="text-center">Projects Pool</h1>
             {%for col in projects|columns:2%}
             <div class="col-lg-6">
                 {%for project in col%}
@@ -38,12 +39,12 @@
                     <a href="{%url 'project' project.id%}"><img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive zoom" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;"></a>
                     <div class="card-footer">
                         <small class="text-muted">
-                           <span style="font-size:x-small;"> {{project.published|timesince}} ago </span> | <span style="text-align:center;">{{project.creator}}</span>
-                            <i style="float: right;padding-top:1%;">
+                           <span> {{project.published|timesince}} ago </span> | <span style="text-align:center;">{{project.creator}}</span>
+                            <small style="float: right;padding-top:1%;">
                                 <a href="{% url 'project' project.id %}" type="button" class="btn btn-dark btn-outline-info">
                                     Project details
                                 </a>
-                            </i>
+                            </small>
                         </small>
                     </div>
                 </div>
