@@ -11,12 +11,14 @@
 
 <div class="container">
     <div class="row" style="margin-top:2.5%;">
+        {%if votes%}
         <h2 style="text-align:center;"><span>Rated</span> <img src="{%static 'photos/stars-1976108_640.png'%}" height="50" width="50"><span id="av" style="font-weight:bold"></span></h2>
         <h5 style="text-align:center;margin-bottom:2.5%;"><span> <img src="{%static 'photos/bullet-2157465_640.png'%}" height="30" width="30" style="border-radius:50%;"> Design <span id="des-v">{{design_av.vote_design__avg|floatformat}}</span> <img src="{%static 'photos/coding-1294361_640.png'%}" height="35" width="35" style="border-radius:50%;"> Usability <span id="us-v">{{usability_av.vote_usability__avg|floatformat}}</span> <img src="{%static 'photos/list-1882326_640.png'%}" height="25" width="25" style="border-radius:50%;"> Content <span id="con-v">{{content_av.vote_content__avg|floatformat}}</span></span></h5>
+        {%endif%}
         <div class="col-lg-3">
             <img class="card-img zee support" src="{{project.support_pic_a.url}}" style="width:100%;height:auto;margin:1%;max-height:400px;">
             <img class="card-img zee support" src="{{project.support_pic_b.url}}" style="width:100%;height:auto;margin-top:2%;margin-left:1%;max-height:400px;">
-            <p class="text-center" style="margin-top:1%;">{{project.short_description}}</p>
+            <h6 class="text-center" style="margin-top:2.5%;">{{project.short_description}}</h6>
 
         </div>
 
@@ -27,7 +29,7 @@
                 </div>
             </div>
             <p class="text-center" style="margin-top:1.5%;">{{project.long_description}}</p>
-            <p class="outline-info dark">Live site: <span><code id="url">{{project.demo_url}}</code> <button type="button" class="btn btn-dark btn-outline-info btn-sm" onClick="copyToClip('#url')">Copy link</button> </span> or <a type="button" class="btn btn-dark btn-outline-info btn-sm" href="{{project.demo_url}}">Click here</a></p>
+            <h6 class="outline-info dark">Live site: <span><code id="url">{{project.demo_url}}</code> <button type="button" class="btn btn-dark btn-outline-info btn-sm" onClick="copyToClip('#url')">Copy link</button> </span> or <a type="button" class="btn btn-dark btn-outline-info btn-sm" href="{{project.demo_url}}">Click here</a></h6>
         </div>
 
         <div class="col-lg-3">
@@ -46,7 +48,7 @@
                 {% for vote in project.vote_set.all %}
                 <li class ="list-group-item" style="font-size:small;">
                     <span style="font-weight:bold;"> <img src="{%static 'photos/bullet-2157465_640.png'%}" height="15" width="15" style="border-radius:50%;margin-bottom:1.5%;"> design: {{ vote.vote_design }} <img src="{%static 'photos/coding-1294361_640.png'%}" height="15" width="15" style="border-radius:50%;"> usability: {{vote.vote_usability}} <img src="{%static 'photos/list-1882326_640.png'%}" height="13.5" width="13.5" style="border-radius:50%;"> content: {{vote.vote_content}}</span>
-                    <span style="font-size:smaller;">{{vote.project.creator}}<span> <img src="{%static 'photos/avatar-3814049_640.png' %}" height="15" width="15" style="border-radius:50%;"></span>
+                    <p><span style="font-size:small;"> by {{vote.project.creator}}<span> <img src="{%static 'photos/avatar-3814049_640.png' %}" height="15" width="15" style="border-radius:50%;"></span></p>
                 </li>
                 {% endfor %}
             </ul>

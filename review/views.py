@@ -139,6 +139,7 @@ def project(request,project_id):
 	design_av = vote.objects.filter(project__id=project_id).aggregate(Avg('vote_design'))
 	usability_av = vote.objects.filter(project__id=project_id).aggregate(Avg('vote_usability'))
 	content_av = vote.objects.filter(project__id=project_id).aggregate(Avg('vote_content'))
+	votes = vote.objects.filter(project__id=project_id)
 	project = Project.objects.get(id=project_id)
 	# votes = vote.objects.filter(project_id=project_id)
 	# votes = vote.objects.get(project_id=project_id)
@@ -174,7 +175,7 @@ def project(request,project_id):
 		# Redisplay the question voting form.
 		return render(request, 'projects/project.html', {
 			'project': project,
-			'error_message': "You didn't select a choice.","voteform":voteform,"total":total,"total_votes":total_votes,"design_av":design_av,"usability_av":usability_av,"content_av":content_av})
+			'error_message': "You didn't select a choice.","voteform":voteform,"total":total,"total_votes":total_votes,"design_av":design_av,"usability_av":usability_av,"content_av":content_av,"votes":votes})
 	else:
 		selected_choice.vote_design += 1
 		selected_choice.vote_usability += 1

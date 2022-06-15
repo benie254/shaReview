@@ -34,10 +34,10 @@ font-family:'Skranji';
 h5,h6,form{
 font-family: 'Potta One';
 }
-p,tbody{
+p,tbody,li{
 font-family: 'Amarante';
 }
-li,small,input{
+small,input{
 font-family: 'Kalam';
 }
 .featured{
