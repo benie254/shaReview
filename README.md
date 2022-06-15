@@ -3,7 +3,7 @@
 A voting app generated with [Python](https://www.python.org/) version 3.8.13 for [Django](https://www.djangoproject.com/) version 4.0.5 
 
 # shaReview
-#### This repo creates an easy-to-use voting app and a votes API
+#### This repo creates a project upload and review app, where users can post their projects and have them voted; the app also provides a votes API
 ## Author
 [Benson Langat](https://github.com/benie254)
 

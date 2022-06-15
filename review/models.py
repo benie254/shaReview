@@ -22,7 +22,7 @@ class voter(models.Model):
 class Project(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 	landing_pic = CloudinaryField('image')
-	short_description = models.CharField(max_length=30)
+	short_description = models.CharField(max_length=60)
 	long_description = models.CharField(max_length=200)
 	support_pic_a = CloudinaryField('image')
 	support_pic_b = CloudinaryField('image')
