@@ -2,8 +2,6 @@
 {%load static%}
 {%load columns%}
 
-
-
 {%block content%}
 <body style="background-color:rgb(6,6,6);">
 
@@ -15,8 +13,8 @@
 
 <div class="container">
      <div class="row row-featured" style="margin-top:1%;margin-bottom:1%;">
-        {%if projects%}
-            {%for col in projects|columns:12%}
+        {%if fprojects%}
+            {%for col in fprojects|columns:12%}
             <div class="col-sm-1">
                 {%for project in col%}
                 <figure>
@@ -36,20 +34,19 @@
             <div class="col-lg-6">
                 {%for project in col%}
                 <div class="card" style="max-width:100%;margin-top:2.5%;">
-                    <h6 style="margin-top:1%;margin-left:1.5%;">{{project.short_description}}  <span style="float:right;font-size:smaller;margin-right:1%;"><a href="{% url 'project' project.id %}">Rate</a></h6>
-                    <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive zoom" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;">
+                    <h6 style="margin-top:1%;margin-left:1.5%;">{{project.short_description}}  <span style="float:right;font-size:smaller;margin-right:1%;"><a href="{% url 'project' project.id %}">Rate this</a></span></h6>
+                    <a href="{%url 'project' project.id%}"><img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive zoom" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;"></a>
                     <div class="card-footer">
                         <small class="text-muted">
                            <span style="font-size:x-small;"> {{project.published|timesince}} ago </span> | <span style="text-align:center;">{{project.creator}}</span>
                             <i style="float: right;padding-top:1%;">
-                                <a href="{% url 'project' project.id %}">
-                                    Full view
+                                <a href="{% url 'project' project.id %}" type="button" class="btn btn-dark btn-outline-info">
+                                    Project details
                                 </a>
                             </i>
                         </small>
                     </div>
                 </div>
-
                 {%endfor%}
             </div>
             {%endfor%}

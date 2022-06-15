@@ -23,9 +23,10 @@ class Project(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 	landing_pic = CloudinaryField('image')
 	short_description = models.CharField(max_length=30)
-	long_description = models.CharField(max_length=60)
+	long_description = models.CharField(max_length=200)
 	support_pic_a = CloudinaryField('image')
 	support_pic_b = CloudinaryField('image')
+	demo_url = models.URLField(null=False)
 	published = models.DateTimeField(auto_now_add=True)
 
 	@classmethod
@@ -33,11 +34,7 @@ class Project(models.Model):
 		projects = cls.objects.filter(long_description__icontains=search_term)
 		return projects
 
-class vote(models.Model):
-	project = models.ForeignKey(Project, on_delete=models.DO_NOTHING,null=True)
-	choice_text = models.CharField(max_length=200, null=True)
-	your_vote = models.IntegerField()
-	published = models.DateTimeField(auto_now_add=True,null=True)
+
 
 
 
@@ -49,7 +46,16 @@ class Profile(models.Model):
 	p_pic = CloudinaryField('image', null=True)
 	created = models.DateTimeField(auto_now_add=True)
 
-
+class vote(models.Model):
+	project = models.ForeignKey(Project, on_delete=models.DO_NOTHING,null=True)
+	user = models.ForeignKey(User, on_delete=models.DO_NOTHING,null=True)
+	profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING,null=True)
+	choice_text = models.CharField(max_length=200, null=True)
+	your_vote = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)],null=True)
+	vote_design = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1), MaxValueValidator(10)])
+	vote_usability = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1), MaxValueValidator(10)])
+	vote_content = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1), MaxValueValidator(10)])
+	published = models.DateTimeField(auto_now_add=True,null=True)
 
 
 

@@ -14,6 +14,7 @@ from review.permissions import IsAdminOrReadOnly,IsAuthenticatedOrReadOnly
 from django.urls import reverse
 from django.db.models import Sum,Count,Avg
 
+
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def new_project(request):
@@ -28,7 +29,8 @@ def new_project(request):
 			long_description = projform.cleaned_data['long_description']
 			support_pic_a = projform.cleaned_data['support_pic_a']
 			support_pic_b = projform.cleaned_data['support_pic_b']
-			project = Project(landing_pic=landing_pic,short_description=short_description,long_description=long_description,support_pic_a=support_pic_a,support_pic_b=support_pic_b)
+			demo_url = projform.cleaned_data['demo_url']
+			project = Project(landing_pic=landing_pic,short_description=short_description,long_description=long_description,support_pic_a=support_pic_a,support_pic_b=support_pic_b,demo_url=demo_url)
 			project.creator = current_user
 			project.save()
 		return redirect('home')
@@ -56,10 +58,11 @@ def search_results(request):
 @login_required(login_url='/accounts/login/')
 def home(request):
 	date = dt.date.today()
-	projects = Project.objects.all()[:6]
+	projects = Project.objects.all()
+	fprojects = Project.objects.all()[:12]
 
 	title = 'Home'
-	return render(request, 'projects/index.html', {"projects": projects,"title": title,"date":date})
+	return render(request, 'projects/index.html', {"projects": projects,"title": title,"date":date,"fprojects":fprojects})
 
 def profile(request,user_id):
 	projects = Project.objects.filter(creator_id=user_id)
@@ -132,7 +135,10 @@ def project(request,project_id):
 	# last_vote = vote.objects.filter('id')
 	# last_vote = vote.objects.filter(project__id=project_id).latest('published')
 	# try:
-	average = vote.objects.filter(project__id=project_id).aggregate(Avg('your_vote'))
+	# average = vote.objects.filter(project__id=project_id).aggregate(Avg('your_vote'))
+	design_av = vote.objects.filter(project__id=project_id).aggregate(Avg('vote_design'))
+	usability_av = vote.objects.filter(project__id=project_id).aggregate(Avg('vote_usability'))
+	content_av = vote.objects.filter(project__id=project_id).aggregate(Avg('vote_content'))
 	project = Project.objects.get(id=project_id)
 	# votes = vote.objects.filter(project_id=project_id)
 	# votes = vote.objects.get(project_id=project_id)
@@ -145,8 +151,10 @@ def project(request,project_id):
 		voteform = VoteForm(request.POST)
 		if voteform.is_valid():
 			print('valid!')
-			your_vote = voteform.cleaned_data['your_vote']
-			project_vote = vote(your_vote=your_vote)
+			vote_design = voteform.cleaned_data['vote_design']
+			vote_usability = voteform.cleaned_data['vote_usability']
+			vote_content = voteform.cleaned_data['vote_content']
+			project_vote = vote(vote_design=vote_design,vote_usability=vote_usability,vote_content=vote_content)
 			project_vote.project = project
 			project_vote.save()
 		return redirect('project',project_id)
@@ -155,7 +163,7 @@ def project(request,project_id):
 
 	# votes = project.vote.all()
 	# print(votes)
-	print(average)
+	# print(average)
 	# print(last_vote)
 
 	title = 'Project'
@@ -166,9 +174,11 @@ def project(request,project_id):
 		# Redisplay the question voting form.
 		return render(request, 'projects/project.html', {
 			'project': project,
-			'error_message': "You didn't select a choice.","voteform":voteform,"total":total,"total_votes":total_votes,"average":average})
+			'error_message': "You didn't select a choice.","voteform":voteform,"total":total,"total_votes":total_votes,"design_av":design_av,"usability_av":usability_av,"content_av":content_av})
 	else:
-		selected_choice.your_vote += 1
+		selected_choice.vote_design += 1
+		selected_choice.vote_usability += 1
+		selected_choice.vote_content += 1
 		selected_choice.save()
 		# Always return an HttpResponseRedirect after successfully dealing
 		# with POST data. This prevents data from being posted twice if a

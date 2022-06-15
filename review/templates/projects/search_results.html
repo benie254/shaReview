@@ -29,15 +29,15 @@
                 {%for project in col%}
                 <div class="card" style="max-width:100%;margin-top:2.5%;">
                     <div class="card-body" style="max-width:100%;">
-                        <img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive modal-target zoom" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;">
+                        <a href="{%url 'project' project.id%}"><img src="{{project.landing_pic.url}}" class="rounded card-img img-responsive modal-target zoom" alt="{{project.description}}" id="Img 1" style="height:400px;width:100%;"></a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">
                             {{project.published|timesince}} ago <img src="{{project.creator.p_pic.url}}" width="10%" class="rounded">
-                            {{project.creator}}
+                            | {{project.creator}}
                             <i style="float: right;padding-top:1%;">
-                                <a href="{% url 'project' project.id %}">
-                                    Full view
+                                <a href="{% url 'project' project.id %}" type="button" class="btn btn-dark btn-outline-info">
+                                    Project details
                                 </a>
                             </i>
                         </small>
